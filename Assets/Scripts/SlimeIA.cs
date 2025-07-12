@@ -66,11 +66,7 @@ public class SlimeIA : MonoBehaviour
 
     #region Meus Métodos
 
-    /// <summary>
-    /// Recebe dano do player ou outro atacante.
-    /// </summary>
-    /// <param name="amount">Quantidade de dano recebido</param>
-    public void GetHit(int amount)
+    public void GetHit(int amount) //receber dano
     {
         if (isDead) return;
 
