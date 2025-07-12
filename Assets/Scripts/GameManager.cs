@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
 {
     public Transform player;
 
-    [Header("Slime IA)")]
+    [Header("Slime IA)")] //Game Manager do IA do Slime
     public float slimeIdleWaitTime;
     public Transform[] slimeWaypoints; // Pontos de patrulha para os slimes
     public float slimeDistancetoAttack = 2.3f;
