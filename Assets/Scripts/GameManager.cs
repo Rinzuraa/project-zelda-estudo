@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public float slimeIdleWaitTime;
     public Transform[] slimeWaypoints; // Pontos de patrulha para os slimes
     public float slimeDistancetoAttack = 2.3f;
+    public float slimeAlertTime = 3f;
 
     void Start()
     {
