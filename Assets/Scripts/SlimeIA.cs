@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Comportamentos da IA do Slime
 public enum EnemyState
 {
     IDLE,
