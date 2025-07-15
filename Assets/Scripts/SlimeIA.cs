@@ -27,6 +27,7 @@ public class SlimeIA : MonoBehaviour
     public const float patrolWaitTime = 5f;
     private bool isWalk;
     private bool isAlert;
+    private bool isAttack;
     private bool isPlayerVisible;
     private int idWaypoint;
     private Vector3 destination;
@@ -113,12 +114,22 @@ public class SlimeIA : MonoBehaviour
                 // Persegue o jogador
                 destination = _GameManager.player.position;
                 agent.destination = destination;
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    Attack();
+                }
+
                 break;
             case EnemyState.FURY:
                 // Persegue o jogador com distância de ataque reduzida
                 destination = _GameManager.player.position;
-                agent.stoppingDistance = _GameManager.slimeDistancetoAttack;
                 agent.destination = destination;
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    Attack();
+                }
+
                 break;
         }
     }
@@ -130,9 +141,8 @@ public class SlimeIA : MonoBehaviour
 
         StopAllCoroutines();
         isAlert = false;
-        state = newState;
 
-        switch (state)
+        switch (newState)
         {
             case EnemyState.IDLE:
                 // Fica parado no lugar
@@ -163,6 +173,8 @@ public class SlimeIA : MonoBehaviour
             case EnemyState.FOLLOW:
                 // Apenas ajusta a distância de parada para ataque
                 agent.stoppingDistance = _GameManager.slimeDistancetoAttack;
+                StartCoroutine("FOLLOW");
+                StartCoroutine(AttackDelay());
                 break;
 
             case EnemyState.FURY:
@@ -171,6 +183,7 @@ public class SlimeIA : MonoBehaviour
                 agent.destination = destination;
                 break;
         }
+        state = newState;
     }
 
     // Rotina para o estado IDLE
@@ -219,6 +232,19 @@ public class SlimeIA : MonoBehaviour
     int Rand()
     {
         return Random.Range(0, 100);
+    }
+
+    IEnumerator AttackDelay()
+    {
+        yield return new WaitForSeconds(_GameManager.slimeAttackDelay);
+        isAttack = false;
+    }
+
+    void Attack()
+    {
+        StartCoroutine(AttackDelay());
+        isAttack = true;
+        anim.SetTrigger("Attack");   
     }
 
     #endregion
